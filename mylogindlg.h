@@ -21,12 +21,17 @@ private slots:
 
     void on_btn_minimize_clicked();
 
+    void on_btn_login_clicked();
+
+    void on_le_pass_returnPressed();
+
 private: //
     int isDrag;
     QPoint tst, bPos;
     void mouseMoveEvent(QMouseEvent*);
     void mouseReleaseEvent(QMouseEvent*);
     void mousePressEvent(QMouseEvent*);
+    void keyPressEvent(QKeyEvent*);
 private:
     Ui::MyLoginDlg *ui;
 };

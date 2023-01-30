@@ -196,7 +196,7 @@ border-radius: 5px;
      <string/>
     </property>
    </widget>
-   <widget class="QLabel" name="label_2">
+   <widget class="QLabel" name="le_curTime">
     <property name="geometry">
      <rect>
       <x>110</x>
@@ -221,6 +221,73 @@ border-radius: 5px;
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_5">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>90</y>
+      <width>71</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>10</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
+    <property name="text">
+     <string>Productivity</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_6">
+    <property name="geometry">
+     <rect>
+      <x>25</x>
+      <y>110</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;
+color: rgb(45, 187, 7);</string>
+    </property>
+    <property name="text">
+     <string>65%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_7">
+    <property name="geometry">
+     <rect>
+      <x>65</x>
+      <y>113</y>
+      <width>41</width>
+      <height>21</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>8</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
+    <property name="text">
+     <string>↑12%</string>
     </property>
    </widget>
   </widget>
@@ -333,10 +400,10 @@ border: 0px solid;
   <widget class="QTabWidget" name="tab_logging">
    <property name="geometry">
     <rect>
-     <x>20</x>
+     <x>15</x>
      <y>190</y>
-     <width>361</width>
-     <height>421</height>
+     <width>370</width>
+     <height>420</height>
     </rect>
    </property>
    <property name="font">
@@ -359,7 +426,6 @@ QTabWidget::tab-bar {
 QTabWidget::pane {
     border-top: 2px solid rgb(231, 235, 238);
 	border-bottom: 2px solid rgb(231, 235, 238);
-z-index:6;
 margin-top:-2px;
 }
 
@@ -380,41 +446,214 @@ padding-left: 10px;
 
 QTabBar::tab:selected {
 	border-bottom: 2px solid rgb(21, 98, 175);
-z-index: 7;
+	color: rgb(21, 98, 175);
+font-weight: normal;
  }
 
  QTabBar::tab:!selected {
      border: 0px;
 border-bottom: 2px solid rgb(231, 235, 238);
-z-index: 0;
+color: rgb(100, 109, 114);
+font-weight: light;
  }
 
 QTabBar::tab:first{
 	margin-left: 0px;
  }</string>
    </property>
+   <property name="tabPosition">
+    <enum>QTabWidget::North</enum>
+   </property>
    <property name="tabShape">
     <enum>QTabWidget::Rounded</enum>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>-1</number>
    </property>
-   <widget class="QWidget" name="tab_activity">
-    <property name="styleSheet">
-     <string notr="true"/>
+  </widget>
+  <widget class="QPushButton" name="btn_viewAllAct">
+   <property name="geometry">
+    <rect>
+     <x>130</x>
+     <y>620</y>
+     <width>131</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+     <pointsize>12</pointsize>
+     <weight>75</weight>
+     <bold>true</bold>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	border:none;
+	color: rgb(55,95,168);
+}
+
+QPushButton:hover{
+	border:none;
+	color: rgb(85,125,198);
+}
+
+QPushButton:pressed{
+	border:none;
+	color: rgb(65,105,178);
+}</string>
+   </property>
+   <property name="text">
+    <string>View More</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="fm_totalTime">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>615</y>
+     <width>120</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QFrame{
+border:none;
+border-left: 5px solid rgb(32,200,4);
+border-radius: 0px;
+}</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label_3">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>5</y>
+      <width>45</width>
+      <height>13</height>
+     </rect>
     </property>
-    <attribute name="title">
-     <string>Activity</string>
-    </attribute>
-   </widget>
-   <widget class="QWidget" name="tab_quickLogging">
-    <property name="styleSheet">
-     <string notr="true"/>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>10</pointsize>
+     </font>
     </property>
-    <attribute name="title">
-     <string>Quick Logging</string>
-    </attribute>
+    <property name="styleSheet">
+     <string notr="true">border: none;</string>
+    </property>
+    <property name="text">
+     <string>Total</string>
+    </property>
    </widget>
+   <widget class="QLabel" name="label_4">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>25</y>
+      <width>101</width>
+      <height>16</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>14</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: none;
+color: rgb(53, 178, 40);
+font-weight:bold;</string>
+    </property>
+    <property name="text">
+     <string>08:30 Hrs</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QPushButton" name="btn_submit">
+   <property name="geometry">
+    <rect>
+     <x>260</x>
+     <y>615</y>
+     <width>131</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+background-color: rgb(21, 95, 190);
+color: rgb(255, 255, 255);
+border: 1px solid #f0f0f0;
+padding: 5px 15px;
+border-radius: 7px;
+}
+
+QPushButton:hover {
+    background-color:  rgb(31, 105, 200);
+}
+
+QPushButton:pressed {
+    background-color:  rgb(26, 100, 195);
+}</string>
+   </property>
+   <property name="text">
+    <string>Submit</string>
+   </property>
+  </widget>
+  <widget class="QScrollBar" name="scroll_log">
+   <property name="geometry">
+    <rect>
+     <x>390</x>
+     <y>290</y>
+     <width>10</width>
+     <height>321</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QScrollBar:vertical {
+background: rgb(244, 248, 251);
+margin: 0;
+border-radius: 5px;
+}
+
+QScrollBar::handle:vertical {
+background: #767676;
+border-radius: 3px;
+}
+
+QScrollBar::add-line:vertical {
+height: 0px;
+border-radius: 5px;
+}
+
+QScrollBar::sub-line:vertical {
+height: 0px;
+border-radius: 5px;
+}
+
+QScrollBar::add-page:vertical, QScrollBar::sub-page:vertical {
+height: 0px;
+border-radius: 5px;
+}</string>
+   </property>
+   <property name="orientation">
+    <enum>Qt::Vertical</enum>
+   </property>
   </widget>
  </widget>
  <resources>

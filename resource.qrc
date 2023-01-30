@@ -15,5 +15,9 @@
         <file>img/collapse_bottom_hover.png</file>
         <file>img/collapse_top.png</file>
         <file>img/collapse_top_hover.png</file>
+        <file>img/waste_hover.png</file>
+        <file>img/waste_normal.png</file>
+        <file>img/combo_arrow.png</file>
+        <file>img/combo_up_arrow.png</file>
     </qresource>
 </RCC>

@@ -25,6 +25,10 @@ MyLoginDlg::MyLoginDlg(QWidget *parent) :
     QRegion rgn6(width()-BR*2, height()-BR*2, BR*2, BR*2, QRegion::Ellipse);
     this->setMask(rgn1+rgn2+rgn3+rgn4+rgn5+rgn6);
 
+    this->setTabOrder(ui->le_email, ui->le_pass);
+    this->setTabOrder(ui->le_pass, ui->btn_login);
+    this->setTabOrder(ui->btn_login, ui->btn_forgot_pass);
+
     isDrag = false;
 
     setMouseTracking(true);
@@ -70,5 +74,26 @@ void MyLoginDlg::on_btn_close_clicked()
 void MyLoginDlg::on_btn_minimize_clicked()
 {
     this->showMinimized();
+}
+
+void MyLoginDlg::keyPressEvent(QKeyEvent *event){
+    if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Escape){
+        return;
+    }
+}
+
+
+void MyLoginDlg::on_btn_login_clicked()
+{
+    if(ui->le_email->text() == "smartwebdev0119@gmail.com" && ui->le_pass->text() == "pRose20000119"){
+        qDebug() << "correct";
+        this->close();
+    }
+}
+
+
+void MyLoginDlg::on_le_pass_returnPressed()
+{
+    on_btn_login_clicked();
 }
 

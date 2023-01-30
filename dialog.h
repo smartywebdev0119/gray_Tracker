@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include "mylogindlg.h"
+#include "activity.h"
+#include "quicklogging.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Dialog; }
@@ -17,15 +19,20 @@ public:
     ~Dialog();
 private:
     MyLoginDlg *dlg;
+    Activity *actWid;
+    QuickLogging *quickLog;
+private:
     int isRecord, iscollapse;
+    int curTime;
+private:
+    int recordTime;
+    void saveScreenshots();
 private slots:
     void on_btn_minimize_clicked();
-
     void on_btn_close_clicked();
-
     void on_btn_stop_play_clicked();
-
     void on_btn_collapse_below_clicked();
+    void on_tab_logging_tabBarClicked(int index);
 
 private: //
     int isDrag;
@@ -34,10 +41,10 @@ private: //
     void mouseReleaseEvent(QMouseEvent*);
     void mousePressEvent(QMouseEvent*);
     void showEvent(QShowEvent*);
+    void keyPressEvent(QKeyEvent*);
+    void timerEvent(QTimerEvent*);
 private:
     void paintEvent(QPaintEvent*);
-private: // Draw
-    void drawTitleBar(QPainter&);
 private:
     Ui::Dialog *ui;
 };

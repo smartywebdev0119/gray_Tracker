@@ -118,41 +118,6 @@ border-top:0px;</string>
      <string>Login to Insights</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_close">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>10</y>
-      <width>24</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Yu Gothic UI</family>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-	background-image: url(:/img/close_normal.png);
-border: 0px solid;
-}
-QPushButton:hover{
-	background-color: rgb(255, 255, 255, 100);
-border: 0px solid;
-	background-image: url(:/img/close_hover.png);
-}
-QPushButton:pressed{
-	background-color: rgb(255, 255, 255, 50);
-	background-image: url(:/img/close_hover.png);
-border: 0px solid;
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
    <widget class="QPushButton" name="btn_minimize">
     <property name="geometry">
      <rect>
@@ -216,6 +181,41 @@ border: 0px solid;
 QPushButton:pressed{
 	background-color: rgb(150, 150, 150, 50);
 	background-image: url(:/img/collapse_hover.png);
+border: 0px solid;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_close">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>10</y>
+      <width>24</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-image: url(:/img/close_normal.png);
+border: 0px solid;
+}
+QPushButton:hover{
+	background-color: rgb(255, 255, 255, 100);
+border: 0px solid;
+	background-image: url(:/img/close_hover.png);
+}
+QPushButton:pressed{
+	background-color: rgb(255, 255, 255, 50);
+	background-image: url(:/img/close_hover.png);
 border: 0px solid;
 }</string>
     </property>

@@ -9,17 +9,23 @@ CONFIG += c++11
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    activity.cpp \
     main.cpp \
     dialog.cpp \
-    mylogindlg.cpp
+    mylogindlg.cpp \
+    quicklogging.cpp
 
 HEADERS += \
+    activity.h \
     dialog.h \
-    mylogindlg.h
+    mylogindlg.h \
+    quicklogging.h
 
 FORMS += \
+    activity.ui \
     dialog.ui \
-    mylogindlg.ui
+    mylogindlg.ui \
+    quicklogging.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
@@ -28,3 +34,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 
 RESOURCES += \
     resource.qrc
+
+DISTFILES += \
+    img/waste_16px_normal.png
