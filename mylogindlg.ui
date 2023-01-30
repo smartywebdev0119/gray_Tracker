@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MyLoginDlg</class>
+ <widget class="QDialog" name="MyLoginDlg">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>400</width>
+    <height>300</height>
+   </rect>
+  </property>
+  <property name="minimumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="maximumSize">
+   <size>
+    <width>400</width>
+    <height>300</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <family>Yu Gothic UI</family>
+    <pointsize>12</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Dialog</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">background-color: rgb(244, 248, 251);
+border: 1px solid rgb(200, 200, 200);
+border-radius:7px;</string>
+  </property>
+  <widget class="QLineEdit" name="le_email">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>69</y>
+     <width>311</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(100, 100, 100);
+border: 1px solid #f0f0f0;
+padding: 5px 15px;
+border-radius: 7px;</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+   <property name="placeholderText">
+    <string>Email ID</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="fm_titlebar">
+   <property name="geometry">
+    <rect>
+     <x>1</x>
+     <y>1</y>
+     <width>398</width>
+     <height>45</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 223, 1);
+border-color: rgb(255, 255, 255);
+border-top-left-radius: 7px;
+ border-top-right-radius: 7px;
+border-bottom-left-radius: 0px;
+border-bottom-right-radius: 0px;
+border-bottom: 1px;
+border-left: 0px;
+border-right:0px;
+border-top:0px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="le_title">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>10</y>
+      <width>221</width>
+      <height>31</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>14</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px solid;
+</string>
+    </property>
+    <property name="text">
+     <string>Login to Insights</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_close">
+    <property name="geometry">
+     <rect>
+      <x>360</x>
+      <y>10</y>
+      <width>24</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-image: url(:/img/close_normal.png);
+border: 0px solid;
+}
+QPushButton:hover{
+	background-color: rgb(255, 255, 255, 100);
+border: 0px solid;
+	background-image: url(:/img/close_hover.png);
+}
+QPushButton:pressed{
+	background-color: rgb(255, 255, 255, 50);
+	background-image: url(:/img/close_hover.png);
+border: 0px solid;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_minimize">
+    <property name="geometry">
+     <rect>
+      <x>300</x>
+      <y>10</y>
+      <width>24</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-image: url(:/img/minimize_normal.png);
+border: 0px solid;
+}
+QPushButton:hover{
+	background-color: rgb(255, 255, 255, 100);
+border: 0px solid;
+	background-image: url(:/img/minimize_hover.png);
+}
+QPushButton:pressed{
+	background-color: rgb(150, 150, 150, 50);
+border: 0px solid;
+	background-image: url(:/img/minimize_hover.png);
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="btn_minimize_2">
+    <property name="geometry">
+     <rect>
+      <x>330</x>
+      <y>10</y>
+      <width>24</width>
+      <height>24</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>12</pointsize>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">QPushButton {
+	background-image: url(:/img/collapse_normal.png);
+border: 0px solid;
+}
+QPushButton:hover{
+	background-color: rgb(255, 255, 255, 100);
+	background-image: url(:/img/collapse_hover.png);
+border: 0px solid;
+}
+QPushButton:pressed{
+	background-color: rgb(150, 150, 150, 50);
+	background-image: url(:/img/collapse_hover.png);
+border: 0px solid;
+}</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QLineEdit" name="le_pass">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>120</y>
+     <width>311</width>
+     <height>40</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+color: rgb(100, 100, 100);
+border: 1px solid #f0f0f0;
+padding: 5px 15px;
+border-radius: 7px;</string>
+   </property>
+   <property name="echoMode">
+    <enum>QLineEdit::Password</enum>
+   </property>
+   <property name="placeholderText">
+    <string>Password</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_login">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>170</y>
+     <width>121</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+     <pointsize>12</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+background-color: rgb(21, 95, 190);
+color: rgb(255, 255, 255);
+border: 1px solid #f0f0f0;
+padding: 5px 15px;
+border-radius: 7px;
+}
+
+QPushButton:hover {
+    background-color:  rgb(31, 105, 200);
+}
+
+QPushButton:pressed {
+    background-color:  rgb(26, 100, 195);
+}</string>
+   </property>
+   <property name="text">
+    <string>Login</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_forgot_pass">
+   <property name="geometry">
+    <rect>
+     <x>50</x>
+     <y>220</y>
+     <width>111</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">border: 0px solid;
+QPushButton{
+	color: rgb(61, 65, 69);
+}
+QPushButton:hover{
+	color: rgb(81, 85, 89);
+}</string>
+   </property>
+   <property name="text">
+    <string>Forgot Password?</string>
+   </property>
+  </widget>
+  <widget class="QFrame" name="frame_2">
+   <property name="geometry">
+    <rect>
+     <x>1</x>
+     <y>264</y>
+     <width>398</width>
+     <height>35</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">background-color: rgb(255, 255, 255);
+border-top: 2px solid rgb(238, 238, 238);
+border-left: 0px;
+border-right: 0px;
+border-bottom:0px;
+border-radius: 0px;
+border-top-left-radius: 0px;
+ border-top-right-radius: 0px;
+border-bottom-left-radius: 7px;
+border-bottom-right-radius: 7px;</string>
+   </property>
+   <property name="frameShape">
+    <enum>QFrame::StyledPanel</enum>
+   </property>
+   <property name="frameShadow">
+    <enum>QFrame::Raised</enum>
+   </property>
+   <widget class="QLabel" name="label">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>7</y>
+      <width>200</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border: 0px;</string>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+    <property name="pixmap">
+     <pixmap resource="resource.qrc">:/img/status_bar.png</pixmap>
+    </property>
+   </widget>
+  </widget>
+ </widget>
+ <resources>
+  <include location="resource.qrc"/>
+ </resources>
+ <connections/>
+</ui>

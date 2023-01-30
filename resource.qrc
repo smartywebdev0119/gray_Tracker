@@ -1,0 +1,19 @@
+<RCC>
+    <qresource prefix="/">
+        <file>img/close_normal.png</file>
+        <file>img/collapse_normal.png</file>
+        <file>img/minimize_normal.png</file>
+        <file>img/close_hover.png</file>
+        <file>img/collapse_hover.png</file>
+        <file>img/minimize_hover.png</file>
+        <file>img/status_bar.png</file>
+        <file>img/play.png</file>
+        <file>img/play_64px.png</file>
+        <file>img/stop.png</file>
+        <file>img/stop_64px.png</file>
+        <file>img/collapse_bottom.png</file>
+        <file>img/collapse_bottom_hover.png</file>
+        <file>img/collapse_top.png</file>
+        <file>img/collapse_top_hover.png</file>
+    </qresource>
+</RCC>
