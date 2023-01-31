@@ -20,39 +20,16 @@ QuickLogging::QuickLogging(QWidget *parent) :
     delta = 0;
     installEventFilter(this);
 
-    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("gray.db");
-
-    if (!db.open()) {
-        qDebug() << "Error: connection with database fail";
-    } else {
-        qDebug() << "Database: connection ok";
-    }
-
-    // Create table if not exists
-    QSqlQuery query;
-    query.exec("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, box1 INTEGER, box2 INTEGER, isSelected INTEGER, time INTEGER)");
-
-    query.exec("SELECT * FROM history");
-    while (query.next()) {
-        int id = query.value(0).toInt();
-        int box1 = query.value(1).toInt();
-        int box2 = query.value(2).toInt();
-        int isSelected = query.value(3).toInt();
-        int time = query.value(4).toInt();
-
-        qDebug() << id << box1 << box2 << isSelected << time;
-
-        addProject(box1, box2, isSelected, time);
-
-    }
-    db.close();
-
 }
 
 QuickLogging::~QuickLogging()
 {
     delete ui;
+}
+
+int isBeginShow = 0;
+
+void QuickLogging::showEvent(QShowEvent *){
 }
 
 void QuickLogging::addProject(int box1=-1, int box2=-1, int isSelected=-1, int time=-1){
@@ -92,6 +69,7 @@ void QuickLogging::addProject(int box1=-1, int box2=-1, int isSelected=-1, int t
     item->aTime->setText("00:00");
     if(time != -1){
         item->aTime->setText(QString("%1%2:%3%4").arg(time/36000).arg(time%36000/3600).arg(time%3600/600).arg(time%600/60));
+        item->time = time;
     }
 
     item->btn_play_stop = new QPushButton(this);
@@ -174,7 +152,7 @@ void QuickLogging::on_btn_addTask_clicked()
     }
 
     QSqlQuery query;
-    qDebug() << query.exec("INSERT INTO mytable (box1, box2, isSelected, time) VALUES ("+QString("%1,%2,%3,%4").arg(items[items.size()-1]->box1->currentIndex())
+    qDebug() << query.exec("INSERT INTO history (box1, box2, isSelected, time) VALUES ("+QString("%1,%2,%3,%4").arg(items[items.size()-1]->box1->currentIndex())
             .arg(items[items.size()-1]->box2->currentIndex())
             .arg(items[items.size()-1]->isSlected)
             .arg(items[items.size()-1]->time) + ")");
@@ -230,7 +208,6 @@ void QuickLogging::startopRecord(){
 
 void QuickLogging::buttonPress(int index){
     if(items[index]->isSlected){
-        qDebug() << index;
         items[index]->isSlected = 1;
         items[index]->isRecord = 1 - items[index]->isRecord;
         if(items[index]->isRecord){
@@ -260,5 +237,21 @@ void QuickLogging::buttonPress(int index){
         items[index]->box1->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
         items[index]->box2->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
         items[index]->aTime->setStyleSheet("border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255, 255, 255);\nfont: 12pt \"Yu Gothic UI\";\npadding: 5px;\nborder-radius: 3px;");
+    }
+
+}
+
+void QuickLogging::showTime(){
+    int index=-1;
+    for(int i=0; i<items.size(); i++){
+        if(items[i]->isSlected){
+            index = i;
+        }
+    }
+    if(index!=-1){
+        int curTime = items[index]->time;
+        le_time->setText(QString("%1%2: %3%4: %5%6").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60).arg(curTime%60/10).arg(curTime%10));
+    } else {
+        le_time->setText("Check In");
     }
 }

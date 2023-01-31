@@ -50,6 +50,8 @@ public:
     QScrollBar *sll;
     QVector<TASK*> items;
     QPushButton *btn_tps;
+    QLabel *le_time;
+    void showTime();
     void refreshItems();
 public:
     void addProject(int box1, int box2, int isSelected, int time);
@@ -61,6 +63,7 @@ private slots:
     void on_btn_addTask_clicked();
 
 private:
+    void showEvent(QShowEvent*);
     void wheelEvent(QWheelEvent*);
     bool eventFilter(QObject *obj, QEvent *ev) override;
 private:

@@ -32,6 +32,7 @@ Dialog::Dialog(QWidget *parent)
 
     quickLog->sll = ui->scroll_log;
     quickLog->btn_tps = ui->btn_stop_play;
+    quickLog->le_time = ui->le_curTime;
 
     ui->scroll_log->hide();
 
@@ -102,6 +103,40 @@ void Dialog::showEvent(QShowEvent *){
         ui->fm_statusbar->setGeometry(ui->fm_titlebar->x(), this->height()-ui->fm_statusbar->height()-2, ui->fm_statusbar->width(), ui->fm_statusbar->height());
         isBegin = 1;
         setRoundWid();
+
+        QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+        db.setDatabaseName("gray.db");
+
+        if (!db.open()) {
+            qDebug() << "Error: connection with database fail";
+        } else {
+            qDebug() << "Database: connection ok";
+        }
+
+        // Create table if not exists
+        QSqlQuery query;
+        query.exec("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, box1 INTEGER, box2 INTEGER, isSelected INTEGER, time INTEGER)");
+
+        query.exec("SELECT * FROM history");
+
+        int totalTime=0;
+
+        while (query.next()) {
+            int id = query.value(0).toInt();
+            int box1 = query.value(1).toInt();
+            int box2 = query.value(2).toInt();
+            int isSelected = query.value(3).toInt();
+            int time = query.value(4).toInt();
+
+            quickLog->addProject(box1, box2, isSelected, time);
+            totalTime += time;
+            quickLog->sll->hide();
+
+        }
+        db.close();
+        quickLog->showTime();
+        ui->le_tTime->setText(QString("%1%2:%3%4 Hrs").arg(totalTime/36000).arg(totalTime%36000/3600).arg(totalTime%3600/600).arg(totalTime%600/60));
+
     }
 }
 
@@ -156,11 +191,13 @@ void Dialog::on_btn_stop_play_clicked()
     }
 
     if(index == -1){
+        if(quickLog->items.size() == 1){
+            quickLog->buttonPress(0);
+        }
         return;
     }
 
     quickLog->buttonPress(index);
-    qDebug() << index;
 
 /*    if(isRecord){
         ui->btn_stop_play->setStyleSheet("QPushButton {\n	background-image: url(:/img/stop_64px.png);\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
@@ -214,6 +251,7 @@ void Dialog::timerEvent(QTimerEvent *){
 
     quickLog->items[index]->time += quickLog->items[index]->isRecord * 7;
     curTime = quickLog->items[index]->time;
+
     if(quickLog->items[index]->isRecord){
         ui->le_curTime->setText(QString("%1%2: %3%4: %5%6").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60).arg(curTime%60/10).arg(curTime%10));
         quickLog->items[index]->aTime->setText(QString("%1%2:%3%4").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60));
@@ -221,6 +259,11 @@ void Dialog::timerEvent(QTimerEvent *){
             saveScreenshots();
             quickLog->saveTasks();
         }
+        int totalTime=0;
+        for(int i=0; i<quickLog->items.size(); i++){
+            totalTime += quickLog->items[i]->time;
+        }
+        ui->le_tTime->setText(QString("%1%2:%3%4 Hrs").arg(totalTime/36000).arg(totalTime%36000/3600).arg(totalTime%3600/600).arg(totalTime%600/60));
     }
 }
 
