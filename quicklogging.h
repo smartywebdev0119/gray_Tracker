@@ -10,6 +10,8 @@
 
 #include <QVector>
 
+#include <QtSql>
+
 namespace Ui {
 class QuickLogging;
 }
@@ -19,9 +21,14 @@ public:
     QComboBox *box1, *box2;
     QLabel *aTime;
     QPushButton *btn_play_stop;
-    int isSlected;
+    int isSlected, isRecord;
+
+    int time;
+
     TASK(){
         isSlected = 0;
+        isRecord = 0;
+        time = 0;
     }
     ~TASK(){
         delete box1;
@@ -42,10 +49,14 @@ public:
     int delta;
     QScrollBar *sll;
     QVector<TASK*> items;
+    QPushButton *btn_tps;
     void refreshItems();
 public:
-    void addProject();
-
+    void addProject(int box1, int box2, int isSelected, int time);
+    void saveTasks();
+public slots:
+    void startopRecord();
+    void buttonPress(int index);
 private slots:
     void on_btn_addTask_clicked();
 

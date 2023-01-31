@@ -20,6 +20,34 @@ QuickLogging::QuickLogging(QWidget *parent) :
     delta = 0;
     installEventFilter(this);
 
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("gray.db");
+
+    if (!db.open()) {
+        qDebug() << "Error: connection with database fail";
+    } else {
+        qDebug() << "Database: connection ok";
+    }
+
+    // Create table if not exists
+    QSqlQuery query;
+    query.exec("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, box1 INTEGER, box2 INTEGER, isSelected INTEGER, time INTEGER)");
+
+    query.exec("SELECT * FROM history");
+    while (query.next()) {
+        int id = query.value(0).toInt();
+        int box1 = query.value(1).toInt();
+        int box2 = query.value(2).toInt();
+        int isSelected = query.value(3).toInt();
+        int time = query.value(4).toInt();
+
+        qDebug() << id << box1 << box2 << isSelected << time;
+
+        addProject(box1, box2, isSelected, time);
+
+    }
+    db.close();
+
 }
 
 QuickLogging::~QuickLogging()
@@ -27,29 +55,49 @@ QuickLogging::~QuickLogging()
     delete ui;
 }
 
-void QuickLogging::addProject(){
+void QuickLogging::addProject(int box1=-1, int box2=-1, int isSelected=-1, int time=-1){
     TASK *item = new TASK;
 
     item->box1 = new QComboBox(this);
-    item->box1->setStyleSheet(" QComboBox {\n	background-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 18px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+    item->box1->setStyleSheet(" QComboBox {\n	background-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
 
-    item->box1->addItem("123123");
-    item->box1->addItem("123123");
+    item->box1->addItem("Project 1");
+    item->box1->addItem("Project 2");
+    item->box1->addItem("Project 3");
+    item->box1->addItem("Project 4");
+    item->box1->setEditText("");
+    if(box1!=-1){
+        item->box1->setCurrentIndex(box1);
+    }
 
     item->box2 = new QComboBox(this);
-    item->box2->setStyleSheet(" QComboBox {\n	background-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 18px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+    item->box2->setStyleSheet(" QComboBox {\n	background-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
 
-    item->box2->addItem("123123");
-    item->box2->addItem("123123");
+    item->box2->addItem("GM Insights");
+    item->box2->addItem("GM Insights App");
+    item->box2->setEditText("");
+
+    if(box2!=-1){
+        item->box2->setCurrentIndex(box2);
+    }
+
+    if(isSelected!=-1){
+        item->isSlected = isSelected;
+    }
 
     item->aTime = new QLabel(this);
     item->aTime->setStyleSheet("background-color: rgb(255, 255, 255);\nfont: 12pt \"Yu Gothic UI\";\npadding: 5px;\nborder-radius: 3px;");
 
     item->aTime->setAlignment(Qt::AlignCenter);
-    item->aTime->setText("02:00");
+    item->aTime->setText("00:00");
+    if(time != -1){
+        item->aTime->setText(QString("%1%2:%3%4").arg(time/36000).arg(time%36000/3600).arg(time%3600/600).arg(time%600/60));
+    }
 
     item->btn_play_stop = new QPushButton(this);
     item->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/play_small.png);");
+
+    connect(item->btn_play_stop, SIGNAL(clicked()), this, SLOT(startopRecord()));
 
     items.push_back(item);
 
@@ -59,6 +107,12 @@ void QuickLogging::addProject(){
     }
 
     refreshItems();
+
+    if(isSelected == 1){
+        item->box1->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+        item->box2->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+        item->aTime->setStyleSheet("border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255, 255, 255);\nfont: 12pt \"Yu Gothic UI\";\npadding: 5px;\nborder-radius: 3px;");
+    }
 
 }
 
@@ -109,5 +163,102 @@ bool QuickLogging::eventFilter(QObject *o, QEvent *e){
 void QuickLogging::on_btn_addTask_clicked()
 {
     addProject();
+
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("gray.db");
+
+    if (!db.open()) {
+        qDebug() << "Error: connection with database fail";
+    } else {
+        qDebug() << "Database: connection ok";
+    }
+
+    QSqlQuery query;
+    qDebug() << query.exec("INSERT INTO mytable (box1, box2, isSelected, time) VALUES ("+QString("%1,%2,%3,%4").arg(items[items.size()-1]->box1->currentIndex())
+            .arg(items[items.size()-1]->box2->currentIndex())
+            .arg(items[items.size()-1]->isSlected)
+            .arg(items[items.size()-1]->time) + ")");
+
+    db.close();
+
+    if(items.size()>5){
+        sll->setValue(sll->maximum());
+    }
 }
 
+void QuickLogging::saveTasks(){
+    QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
+    db.setDatabaseName("gray.db");
+
+    if (!db.open()) {
+        qDebug() << "Error: connection with database fail";
+    } else {
+        qDebug() << "Database: connection ok";
+    }
+
+    // Create table if not exists
+    QSqlQuery query;
+    query.exec("CREATE TABLE IF NOT EXISTS history (id INTEGER PRIMARY KEY AUTOINCREMENT, box1 INTEGER, box2 INTEGER, isSelected INTEGER, time INTEGER)");
+
+    for(int i=0; i<items.size(); i++){
+        QSqlQuery query;
+        query.prepare("UPDATE history SET box1=?, box2=?, isSelected=?, time=? WHERE id=?");
+        query.addBindValue(items[i]->box1->currentIndex());
+        query.addBindValue(items[i]->box2->currentIndex());
+        query.addBindValue(items[i]->isSlected);
+        query.addBindValue(items[i]->time);
+        query.addBindValue(i+1);
+        if (!query.exec()) {
+            qDebug() << "Error updating entry";
+        } else {
+            qDebug() << "Entry updated!";
+        }
+    }
+    db.close();
+}
+
+void QuickLogging::startopRecord(){
+    QObject *sender = QObject::sender();
+    int index;
+    for(int i=0; i<items.size(); i++){
+        if(sender == items[i]->btn_play_stop){
+            index = i;
+        }
+    }
+    buttonPress(index);
+}
+
+void QuickLogging::buttonPress(int index){
+    if(items[index]->isSlected){
+        qDebug() << index;
+        items[index]->isSlected = 1;
+        items[index]->isRecord = 1 - items[index]->isRecord;
+        if(items[index]->isRecord){
+            items[index]->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/pause_small.png);");
+            btn_tps->setStyleSheet("QPushButton {\n	background-image: url(:/img/stop_64px.png);\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
+        } else {
+            items[index]->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/play_small.png);");
+            btn_tps->setStyleSheet("QPushButton {\n	background-image: url(:/img/play_64x.png);\n	background-color: rgb(29, 95, 190);\nbackground-image: url(:/img/play_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
+        }
+
+        //items[index]->box1->setStyleSheet(" QComboBox {\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+        //items[index]->box2->setStyleSheet(" QComboBox {\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+        //items[index]->aTime->setStyleSheet("background-color: rgb(255, 255, 255);\nfont: 12pt \"Yu Gothic UI\";\npadding: 5px;\nborder-radius: 3px;");
+    } else {
+        for(int i=0; i<items.size(); i++){
+            items[i]->isSlected = 0;
+            items[i]->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/play_small.png);");
+            items[i]->box1->setStyleSheet(" QComboBox {\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+            items[i]->box2->setStyleSheet(" QComboBox {\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+            items[i]->aTime->setStyleSheet("background-color: rgb(255, 255, 255);\nfont: 12pt \"Yu Gothic UI\";\npadding: 5px;\nborder-radius: 3px;");
+            items[i]->isRecord = false;
+        }
+        items[index]->isSlected = 1;
+        items[index]->isRecord = true;
+        btn_tps->setStyleSheet("QPushButton {\n	background-image: url(:/img/stop_64px.png);\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
+        items[index]->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/pause_small.png);");
+        items[index]->box1->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+        items[index]->box2->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
+        items[index]->aTime->setStyleSheet("border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255, 255, 255);\nfont: 12pt \"Yu Gothic UI\";\npadding: 5px;\nborder-radius: 3px;");
+    }
+}

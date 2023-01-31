@@ -31,6 +31,7 @@ Dialog::Dialog(QWidget *parent)
     ui->tab_logging->addTab(quickLog, "Quick Logging");
 
     quickLog->sll = ui->scroll_log;
+    quickLog->btn_tps = ui->btn_stop_play;
 
     ui->scroll_log->hide();
 
@@ -147,12 +148,25 @@ void Dialog::mouseMoveEvent(QMouseEvent *e){
 
 void Dialog::on_btn_stop_play_clicked()
 {
-    isRecord = 1 - isRecord;
-    if(isRecord){
+    int index = -1;
+    for(int i=0; i<quickLog->items.size(); i++){
+        if(quickLog->items[i]->isSlected){
+            index = i;
+        }
+    }
+
+    if(index == -1){
+        return;
+    }
+
+    quickLog->buttonPress(index);
+    qDebug() << index;
+
+/*    if(isRecord){
         ui->btn_stop_play->setStyleSheet("QPushButton {\n	background-image: url(:/img/stop_64px.png);\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
     } else {
         ui->btn_stop_play->setStyleSheet("QPushButton {\n	background-image: url(:/img/play_64x.png);\n	background-color: rgb(29, 95, 190);\nbackground-image: url(:/img/play_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
-    }
+    }*/
 }
 
 void Dialog::on_btn_collapse_below_clicked()
@@ -187,11 +201,25 @@ void Dialog::on_tab_logging_tabBarClicked(int index)
 }
 
 void Dialog::timerEvent(QTimerEvent *){
-    curTime += isRecord;
-    if(isRecord){
+    int index = -1;
+    for(int i=0; i<quickLog->items.size(); i++){
+        if(quickLog->items[i]->isSlected){
+            index = i;
+        }
+    }
+
+    if(index == -1){
+        return;
+    }
+
+    quickLog->items[index]->time += quickLog->items[index]->isRecord * 7;
+    curTime = quickLog->items[index]->time;
+    if(quickLog->items[index]->isRecord){
         ui->le_curTime->setText(QString("%1%2: %3%4: %5%6").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60).arg(curTime%60/10).arg(curTime%10));
+        quickLog->items[index]->aTime->setText(QString("%1%2:%3%4").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60));
         if(curTime % recordTime == 0){
             saveScreenshots();
+            quickLog->saveTasks();
         }
     }
 }
