@@ -17,19 +17,15 @@ MyLoginDlg::MyLoginDlg(QWidget *parent) :
     ui->setupUi(this);
     this->setWindowFlag(Qt::FramelessWindowHint);
 
-    QRegion rgn1(0, BR, width(), height()-BR*2, QRegion::Rectangle);
-    QRegion rgn2(BR, 0, width()-BR*2, height(), QRegion::Rectangle);
-    QRegion rgn3(0, 0, BR*2, BR*2, QRegion::Ellipse);
-    QRegion rgn4(0, height()-BR*2, BR*2, BR*2, QRegion::Ellipse);
-    QRegion rgn5(width()-BR*2, 0, BR*2, BR*2, QRegion::Ellipse);
-    QRegion rgn6(width()-BR*2, height()-BR*2, BR*2, BR*2, QRegion::Ellipse);
-    this->setMask(rgn1+rgn2+rgn3+rgn4+rgn5+rgn6);
+    setRoundWid();
 
     this->setTabOrder(ui->le_email, ui->le_pass);
     this->setTabOrder(ui->le_pass, ui->btn_login);
     this->setTabOrder(ui->btn_login, ui->btn_forgot_pass);
 
     isDrag = false;
+
+    isLogin = false;
 
     setMouseTracking(true);
 
@@ -38,6 +34,16 @@ MyLoginDlg::MyLoginDlg(QWidget *parent) :
 MyLoginDlg::~MyLoginDlg()
 {
     delete ui;
+}
+
+void MyLoginDlg::setRoundWid(){
+    QRegion rgn1(0, BR, width(), height()-BR*2, QRegion::Rectangle);
+    QRegion rgn2(BR, 0, width()-BR*2, height(), QRegion::Rectangle);
+    QRegion rgn3(0, 0, BR*2, BR*2, QRegion::Ellipse);
+    QRegion rgn4(0, height()-BR*2, BR*2, BR*2, QRegion::Ellipse);
+    QRegion rgn5(width()-BR*2, 0, BR*2, BR*2, QRegion::Ellipse);
+    QRegion rgn6(width()-BR*2, height()-BR*2, BR*2, BR*2, QRegion::Ellipse);
+    this->setMask(rgn1+rgn2+rgn3+rgn4+rgn5+rgn6);
 }
 
 void MyLoginDlg::on_btn_forgot_pass_clicked()
@@ -86,7 +92,7 @@ void MyLoginDlg::keyPressEvent(QKeyEvent *event){
 void MyLoginDlg::on_btn_login_clicked()
 {
     if(ui->le_email->text() == "smartwebdev0119@gmail.com" && ui->le_pass->text() == "pRose20000119"){
-        qDebug() << "correct";
+        isLogin = true;
         this->close();
     }
 }

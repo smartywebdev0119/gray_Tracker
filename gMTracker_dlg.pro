@@ -10,6 +10,7 @@ CONFIG += c++11
 
 SOURCES += \
     activity.cpp \
+    imagedlg.cpp \
     main.cpp \
     dialog.cpp \
     mylogindlg.cpp \
@@ -18,12 +19,14 @@ SOURCES += \
 HEADERS += \
     activity.h \
     dialog.h \
+    imagedlg.h \
     mylogindlg.h \
     quicklogging.h
 
 FORMS += \
     activity.ui \
     dialog.ui \
+    imagedlg.ui \
     mylogindlg.ui \
     quicklogging.ui
 

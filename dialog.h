@@ -6,6 +6,8 @@
 #include "activity.h"
 #include "quicklogging.h"
 
+#include <QScrollArea>
+
 QT_BEGIN_NAMESPACE
 namespace Ui { class Dialog; }
 QT_END_NAMESPACE
@@ -26,13 +28,23 @@ private:
     int curTime;
 private:
     int recordTime;
+public:
     void saveScreenshots();
+    void setRoundWid();
 private slots:
     void on_btn_minimize_clicked();
     void on_btn_close_clicked();
     void on_btn_stop_play_clicked();
     void on_btn_collapse_below_clicked();
     void on_tab_logging_tabBarClicked(int index);
+
+    void on_btn_viewAllAct_clicked();
+
+    void on_scroll_log_valueChanged(int value);
+
+    void on_scroll_activity_valueChanged(int value);
+
+    void on_tab_logging_currentChanged(int index);
 
 private: //
     int isDrag;

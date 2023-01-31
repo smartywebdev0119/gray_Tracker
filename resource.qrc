@@ -19,5 +19,7 @@
         <file>img/waste_normal.png</file>
         <file>img/combo_arrow.png</file>
         <file>img/combo_up_arrow.png</file>
+        <file>img/pause_small.png</file>
+        <file>img/play_small.png</file>
     </qresource>
 </RCC>

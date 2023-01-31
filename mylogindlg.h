@@ -14,7 +14,8 @@ class MyLoginDlg : public QDialog
 public:
     explicit MyLoginDlg(QWidget *parent = nullptr);
     ~MyLoginDlg();
-
+public:
+    void setRoundWid();
 private slots:
     void on_btn_forgot_pass_clicked();
     void on_btn_close_clicked();
@@ -24,7 +25,8 @@ private slots:
     void on_btn_login_clicked();
 
     void on_le_pass_returnPressed();
-
+public:
+    int isLogin;
 private: //
     int isDrag;
     QPoint tst, bPos;

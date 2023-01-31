@@ -62,7 +62,7 @@ padding: 5px 15px;
 border-radius: 7px;</string>
    </property>
    <property name="text">
-    <string/>
+    <string>smartwebdev0119@gmail.com</string>
    </property>
    <property name="placeholderText">
     <string>Email ID</string>
@@ -245,6 +245,9 @@ color: rgb(100, 100, 100);
 border: 1px solid #f0f0f0;
 padding: 5px 15px;
 border-radius: 7px;</string>
+   </property>
+   <property name="text">
+    <string>pRose20000119</string>
    </property>
    <property name="echoMode">
     <enum>QLineEdit::Password</enum>
