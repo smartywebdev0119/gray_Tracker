@@ -81,7 +81,7 @@ private:
     void mouseMoveEvent(QMouseEvent*);
     void wheelEvent(QWheelEvent*);
 public:
-    void addItem(QString path, QString time);
+    void addItem(QString path, QString time, Activity *parent=NULL);
     void refreshItems();
     void viewAllActivity();
 private slots:

@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     dialog.cpp \
     mylogindlg.cpp \
+    qcontmessage.cpp \
     quicklogging.cpp
 
 HEADERS += \
@@ -21,6 +22,7 @@ HEADERS += \
     dialog.h \
     imagedlg.h \
     mylogindlg.h \
+    qcontmessage.h \
     quicklogging.h
 
 FORMS += \
@@ -28,6 +30,7 @@ FORMS += \
     dialog.ui \
     imagedlg.ui \
     mylogindlg.ui \
+    qcontmessage.ui \
     quicklogging.ui
 
 # Default rules for deployment.

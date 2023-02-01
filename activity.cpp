@@ -129,12 +129,10 @@ void Activity::timerEvent(QTimerEvent *){
         items[i]->trash->setGraphicsEffect(effect);
         items[i]->stime->setGraphicsEffect(effect);
     }
-
-
     update();
 }
 
-void Activity::addItem(QString path, QString time){
+void Activity::addItem(QString path, QString time, Activity *parent){
     PicItem *item = new PicItem();
 
     item->path = path;
@@ -152,13 +150,17 @@ void Activity::addItem(QString path, QString time){
 
     item->pix = smoothResize(pix, w, h);
 
-    item->view = new QPushButton(this);
+    if(parent == NULL){
+        parent = this;
+    }
+
+    item->view = new QPushButton(parent);
     item->view->setText("View Screen");
 
-    item->stime = new QLabel(this);
+    item->stime = new QLabel(parent);
     item->stime->setText(time);
 
-    item->trash = new QPushButton(this);
+    item->trash = new QPushButton(parent);
 
     item->x = 0;
     item->y = 20;
@@ -170,8 +172,8 @@ void Activity::addItem(QString path, QString time){
 
     refreshItems();
 
-    connect(item->view, SIGNAL(clicked()), this, SLOT(btnClick()));
-    connect(item->trash, SIGNAL(clicked()), this, SLOT(trashClick()));
+    connect(item->view, SIGNAL(clicked()), parent, SLOT(btnClick()));
+    connect(item->trash, SIGNAL(clicked()), parent, SLOT(trashClick()));
 
     if(isShowAll){
         int t = items.size()/2+items.size()%2;

@@ -6,6 +6,8 @@
 #include "activity.h"
 #include "quicklogging.h"
 
+#include <QThread>
+
 #include <QScrollArea>
 
 QT_BEGIN_NAMESPACE
@@ -27,10 +29,11 @@ private:
     int isRecord, iscollapse;
     int curTime;
 
+    QThread *thread;
+
     int prevHeight;
     void collapseMode();
     void showMode();
-
 private:
     int recordTime;
 public:

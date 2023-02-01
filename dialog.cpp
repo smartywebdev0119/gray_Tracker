@@ -8,7 +8,34 @@
 #include <QDateTime>
 #include <QThread>
 
+#include <windows.h>
+
+#include "qcontmessage.h"
+
+#pragma comment(lib, "user32.lib")
+
 #define BR 7
+
+int keyPressCntPerMinute = 0;
+int mousePressCntPerMinute = 0;
+
+LRESULT CALLBACK MyLowLevelKeyBoardProc(int nCode, WPARAM wParam, LPARAM lParam)
+{
+    if (wParam == WM_KEYDOWN)
+    {
+        keyPressCntPerMinute ++;
+    }
+    return 0;
+}
+
+LRESULT CALLBACK MyLowLevelMouseProc(int nCode, WPARAM wParam, LPARAM lParam)
+{
+    if (wParam == WM_LBUTTONDOWN | wParam == WM_RBUTTONDOWN)
+    {
+        mousePressCntPerMinute ++;
+    }
+    return 0;
+}
 
 Dialog::Dialog(QWidget *parent)
     : QDialog(parent)
@@ -40,10 +67,6 @@ Dialog::Dialog(QWidget *parent)
 
     ui->scroll_log->hide();
 
-    /*for(int i=0; i<10; i++){
-        quickLog->addProject();
-    }*/
-
     setRoundWid();
 
     isRecord = 0, iscollapse = 0;
@@ -64,6 +87,11 @@ Dialog::Dialog(QWidget *parent)
     // Collapse Mode
     ui->le_curTime_Collapse->hide();
     ui->btn_collapse_a->hide();
+
+    HHOOK hHookKeyboard = SetWindowsHookExA(WH_KEYBOARD_LL, MyLowLevelKeyBoardProc, NULL, 0);
+    HHOOK hHookMouse = SetWindowsHookExA(WH_MOUSE_LL, MyLowLevelMouseProc, NULL, 0);
+
+    thread = new QThread;
 
 }
 
@@ -189,7 +217,6 @@ void Dialog::mousePressEvent(QMouseEvent *e){
 }
 
 void Dialog::saveScreenshots(){
-
     QDateTime curTime = QDateTime::currentDateTime();
     QString dirPath = "logs\\screenshots\\";
     QDir dir;
@@ -206,9 +233,9 @@ void Dialog::saveScreenshots(){
         file.setFileName("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg");
         file.open(QIODevice::WriteOnly);
         pix.save(&file, "JPG");
-        actWid->addItem("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg", curTime.toString());
+        //actWid->addItem("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg", curTime.toString());
     }
-    actWid->update();
+    //actWid->update();
 }
 
 void Dialog::mouseReleaseEvent(QMouseEvent *e){
@@ -289,7 +316,7 @@ void Dialog::timerEvent(QTimerEvent *){
         return;
     }
 
-    quickLog->items[index]->time += quickLog->items[index]->isRecord * 7;
+    quickLog->items[index]->time += quickLog->items[index]->isRecord;
     curTime = quickLog->items[index]->time;
 
     if(quickLog->items[index]->isRecord){
@@ -297,8 +324,35 @@ void Dialog::timerEvent(QTimerEvent *){
         ui->le_curTime_Collapse->setText(ui->le_curTime->text());
         quickLog->items[index]->aTime->setText(QString("%1%2:%3%4").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60));
         if(curTime % recordTime == 0){
-            saveScreenshots();
+
+
+            QThread *t = new QThread;
+            this->moveToThread(t);
+
+            connect(t, &QThread::started, this, &Dialog::saveScreenshots);
+
+            t->start();
+
+//            saveScreenshots();
             quickLog->saveTasks();
+
+            static int cNo = 0;
+
+            if(keyPressCntPerMinute == 0 && mousePressCntPerMinute == 0){
+                cNo ++;
+                if(cNo == 6){
+                    cNo = 0;
+                    on_btn_stop_play_clicked();
+                    QContMessage msg;
+                    msg.exec();
+                    on_btn_stop_play_clicked();
+                }
+            } else {
+                cNo = 0;
+            }
+
+            keyPressCntPerMinute = 0;
+            mousePressCntPerMinute = 0;
         }
         int totalTime=0;
         for(int i=0; i<quickLog->items.size(); i++){
