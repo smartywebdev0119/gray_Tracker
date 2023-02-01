@@ -14,6 +14,7 @@ SOURCES += \
     main.cpp \
     dialog.cpp \
     mylogindlg.cpp \
+    mysavethread.cpp \
     qcontmessage.cpp \
     quicklogging.cpp
 
@@ -22,6 +23,7 @@ HEADERS += \
     dialog.h \
     imagedlg.h \
     mylogindlg.h \
+    mysavethread.h \
     qcontmessage.h \
     quicklogging.h
 

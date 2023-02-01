@@ -6,7 +6,7 @@
 #include "activity.h"
 #include "quicklogging.h"
 
-#include <QThread>
+#include "mysavethread.h"
 
 #include <QScrollArea>
 
@@ -29,7 +29,8 @@ private:
     int isRecord, iscollapse;
     int curTime;
 
-    QThread *thread;
+public:
+    MySaveThread *saveTread;
 
     int prevHeight;
     void collapseMode();

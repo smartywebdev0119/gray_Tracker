@@ -91,7 +91,9 @@ Dialog::Dialog(QWidget *parent)
     HHOOK hHookKeyboard = SetWindowsHookExA(WH_KEYBOARD_LL, MyLowLevelKeyBoardProc, NULL, 0);
     HHOOK hHookMouse = SetWindowsHookExA(WH_MOUSE_LL, MyLowLevelMouseProc, NULL, 0);
 
-    thread = new QThread;
+    saveTread = new MySaveThread;
+    saveTread->act = actWid;
+    saveTread->quick = quickLog;
 
 }
 
@@ -139,6 +141,7 @@ void Dialog::setRoundWid(){
 
 Dialog::~Dialog()
 {
+    delete saveTread;
     delete quickLog;
     delete actWid;
     delete dlg;
@@ -233,9 +236,9 @@ void Dialog::saveScreenshots(){
         file.setFileName("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg");
         file.open(QIODevice::WriteOnly);
         pix.save(&file, "JPG");
-        //actWid->addItem("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg", curTime.toString());
+        actWid->addItem("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg", curTime.toString());
     }
-    //actWid->update();
+    actWid->update();
 }
 
 void Dialog::mouseReleaseEvent(QMouseEvent *e){
@@ -326,15 +329,17 @@ void Dialog::timerEvent(QTimerEvent *){
         if(curTime % recordTime == 0){
 
 
-            QThread *t = new QThread;
+            /*QThread *t = new QThread;
             this->moveToThread(t);
 
             connect(t, &QThread::started, this, &Dialog::saveScreenshots);
 
-            t->start();
+            t->start();*/
 
-//            saveScreenshots();
-            quickLog->saveTasks();
+            saveTread->start();
+
+            //actWid->saveScreenshots();
+            //quickLog->saveTasks();
 
             static int cNo = 0;
 

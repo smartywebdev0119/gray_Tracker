@@ -112,22 +112,22 @@ void Activity::timerEvent(QTimerEvent *){
     for(int i=0; i<items.size(); i++){
         if(items[i]->isMouseOver(mousePos, delta)){
             items[i]->alpha = items[i]->alpha+60<=60?items[i]->alpha+60:60;
-            items[i]->view->show();
-            items[i]->trash->show();
-            items[i]->stime->show();
+            //items[i]->view->show();
+            //items[i]->trash->show();
+            //items[i]->stime->show();
         } else {
             items[i]->alpha = items[i]->alpha-60>=0?items[i]->alpha-60:0;
             if(items[i]->alpha == 0){
-                items[i]->view->hide();
-                items[i]->trash->hide();
-                items[i]->stime->hide();
+                //items[i]->view->hide();
+                //items[i]->trash->hide();
+                //items[i]->stime->hide();
             }
         }
-        QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
+/*        QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
         effect->setOpacity(((double)items[i]->alpha/60)); // Set opacity to 50%
         items[i]->view->setGraphicsEffect(effect);
         items[i]->trash->setGraphicsEffect(effect);
-        items[i]->stime->setGraphicsEffect(effect);
+        items[i]->stime->setGraphicsEffect(effect);*/
     }
     update();
 }
@@ -150,7 +150,7 @@ void Activity::addItem(QString path, QString time, Activity *parent){
 
     item->pix = smoothResize(pix, w, h);
 
-    if(parent == NULL){
+    /*if(parent == NULL){
         parent = this;
     }
 
@@ -160,7 +160,7 @@ void Activity::addItem(QString path, QString time, Activity *parent){
     item->stime = new QLabel(parent);
     item->stime->setText(time);
 
-    item->trash = new QPushButton(parent);
+    item->trash = new QPushButton(parent);*/
 
     item->x = 0;
     item->y = 20;
@@ -172,8 +172,8 @@ void Activity::addItem(QString path, QString time, Activity *parent){
 
     refreshItems();
 
-    connect(item->view, SIGNAL(clicked()), parent, SLOT(btnClick()));
-    connect(item->trash, SIGNAL(clicked()), parent, SLOT(trashClick()));
+    //connect(item->view, SIGNAL(clicked()), parent, SLOT(btnClick()));
+    //connect(item->trash, SIGNAL(clicked()), parent, SLOT(trashClick()));
 
     if(isShowAll){
         int t = items.size()/2+items.size()%2;
@@ -201,6 +201,28 @@ void Activity::refreshItems(){
         items[i]->y=((items.size()-1-i))/2*(normalHeight+30)+20;
         items[i]->refresh(delta);
     }
+}
+
+void Activity::saveScreenshots(){
+    QDateTime curTime = QDateTime::currentDateTime();
+    QString dirPath = "logs\\screenshots\\";
+    QDir dir;
+    if(!dir.exists(dirPath)){
+        dir.mkpath(dirPath);
+    }
+
+    QList<QScreen *> screens = QGuiApplication::screens();
+    for(int i=0; i<screens.size(); i++){
+        QPixmap pix;
+        pix = screens[i]->grabWindow(0);
+
+        QFile file;
+        file.setFileName("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg");
+        file.open(QIODevice::WriteOnly);
+        pix.save(&file, "JPG");
+        addItem("logs\\screenshots\\" + curTime.toString("yyyy-MM-dd-hh-mm-ss") + QString("-%1").arg(i) + ".jpg", curTime.toString());
+    }
+    update();
 }
 
 void Activity::viewAllActivity(){
