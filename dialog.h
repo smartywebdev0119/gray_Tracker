@@ -26,6 +26,11 @@ private:
 private:
     int isRecord, iscollapse;
     int curTime;
+
+    int prevHeight;
+    void collapseMode();
+    void showMode();
+
 private:
     int recordTime;
 public:
@@ -45,6 +50,12 @@ private slots:
     void on_scroll_activity_valueChanged(int value);
 
     void on_tab_logging_currentChanged(int index);
+
+    void on_btn_collapse_clicked();
+
+    void on_btn_collapse_a_clicked();
+
+    void on_btn_stop_play_collapse_clicked();
 
 private: //
     int isDrag;

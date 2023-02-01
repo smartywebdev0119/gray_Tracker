@@ -15,7 +15,7 @@ Dialog::Dialog(QWidget *parent)
     , ui(new Ui::Dialog)
 {
     ui->setupUi(this);
-    this->setWindowFlag(Qt::FramelessWindowHint);
+    this->setWindowFlags(Qt::FramelessWindowHint);
 
     dlg = new MyLoginDlg();
     dlg->exec();
@@ -32,7 +32,11 @@ Dialog::Dialog(QWidget *parent)
 
     quickLog->sll = ui->scroll_log;
     quickLog->btn_tps = ui->btn_stop_play;
+    quickLog->btn_tps_collapse = ui->btn_stop_play_collapse;
     quickLog->le_time = ui->le_curTime;
+    quickLog->le_time_collapse = ui->le_curTime_Collapse;
+
+    ui->btn_stop_play_collapse->hide();
 
     ui->scroll_log->hide();
 
@@ -57,6 +61,42 @@ Dialog::Dialog(QWidget *parent)
 
     curTime = 0;
 
+    // Collapse Mode
+    ui->le_curTime_Collapse->hide();
+    ui->btn_collapse_a->hide();
+
+}
+
+void Dialog::showMode(){
+
+    this->setWindowFlags(Qt::FramelessWindowHint);
+    this->show();
+
+    this->setGeometry(this->x(), this->y(), this->width(), prevHeight);
+    ui->fm_titlebar->setGeometry(1, 1, 398, 148);
+    ui->fm_titlebar->setStyleSheet("background-color: rgb(255, 223, 1);\nborder-color: rgb(244, 248, 251);\nborder-radius:0px;\nborder-bottom: 1px;\nborder-left: 0px;\nborder-right:0px;\nborder-top:0px;");
+    ui->le_title->show();
+    ui->le_curTime_Collapse->hide();
+    ui->btn_collapse_a->hide();
+    ui->btn_stop_play_collapse->hide();
+    setRoundWid();
+}
+
+void Dialog::collapseMode(){
+
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->show();
+
+    prevHeight = this->geometry().height();
+    ui->btn_stop_play_collapse->show();
+    ui->btn_collapse_a->show();
+    ui->le_title->hide();
+    ui->le_curTime_Collapse->show();
+    ui->fm_titlebar->setStyleSheet("background-repeat:none;\nbackground-position: center;background-color: rgb(255, 223, 1);\nborder: 2px solid rgb(244, 248, 245);\nborder-radius:0px;\nborder: 1px;\nbackground-image: url(:/img/gray_matrix.png);");
+    ui->fm_titlebar->setGeometry(1, 1, 80, 58);
+
+    this->setGeometry(this->x(), this->y(), this->width(), 60);
+    setRoundWid();
 }
 
 void Dialog::setRoundWid(){
@@ -254,6 +294,7 @@ void Dialog::timerEvent(QTimerEvent *){
 
     if(quickLog->items[index]->isRecord){
         ui->le_curTime->setText(QString("%1%2: %3%4: %5%6").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60).arg(curTime%60/10).arg(curTime%10));
+        ui->le_curTime_Collapse->setText(ui->le_curTime->text());
         quickLog->items[index]->aTime->setText(QString("%1%2:%3%4").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60));
         if(curTime % recordTime == 0){
             saveScreenshots();
@@ -321,5 +362,23 @@ void Dialog::on_tab_logging_currentChanged(int index)
             ui->scroll_log->show();
         }
     }
+}
+
+
+void Dialog::on_btn_collapse_clicked()
+{
+    collapseMode();
+}
+
+
+void Dialog::on_btn_collapse_a_clicked()
+{
+    showMode();
+}
+
+
+void Dialog::on_btn_stop_play_collapse_clicked()
+{
+    on_btn_stop_play_clicked();
 }
 

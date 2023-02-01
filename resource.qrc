@@ -21,5 +21,7 @@
         <file>img/combo_up_arrow.png</file>
         <file>img/pause_small.png</file>
         <file>img/play_small.png</file>
+        <file>img/gray_matrix.png</file>
+        <file>img/expand_arrow.png</file>
     </qresource>
 </RCC>

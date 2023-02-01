@@ -49,8 +49,8 @@ public:
     int delta;
     QScrollBar *sll;
     QVector<TASK*> items;
-    QPushButton *btn_tps;
-    QLabel *le_time;
+    QPushButton *btn_tps, *btn_tps_collapse;
+    QLabel *le_time, *le_time_collapse;
     void showTime();
     void refreshItems();
 public:

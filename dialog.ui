@@ -7,13 +7,13 @@
     <x>0</x>
     <y>0</y>
     <width>400</width>
-    <height>700</height>
+    <height>250</height>
    </rect>
   </property>
   <property name="minimumSize">
    <size>
     <width>400</width>
-    <height>250</height>
+    <height>50</height>
    </size>
   </property>
   <property name="maximumSize">
@@ -28,7 +28,7 @@
   <property name="styleSheet">
    <string notr="true">background-color: rgb(244, 248, 251);
 border: 1px solid rgb(200, 200, 200);
-border-radius:7px;</string>
+border-radius: 7px;</string>
   </property>
   <widget class="QFrame" name="fm_titlebar">
    <property name="geometry">
@@ -41,11 +41,8 @@ border-radius:7px;</string>
    </property>
    <property name="styleSheet">
     <string notr="true">background-color: rgb(255, 223, 1);
-border-color: rgb(255, 255, 255);
-border-top-left-radius: 7px;
- border-top-right-radius: 7px;
-border-bottom-left-radius: 0px;
-border-bottom-right-radius: 0px;
+border-color: rgb(244, 248, 251);
+border-radius:0px;
 border-bottom: 1px;
 border-left: 0px;
 border-right:0px;
@@ -158,7 +155,7 @@ border-radius: 5px;
      <string/>
     </property>
    </widget>
-   <widget class="QPushButton" name="btn_minimize_2">
+   <widget class="QPushButton" name="btn_collapse">
     <property name="geometry">
      <rect>
       <x>330</x>
@@ -261,6 +258,35 @@ color: rgb(45, 187, 7);</string>
     </property>
     <property name="text">
      <string>↑12%</string>
+    </property>
+   </widget>
+   <widget class="QLabel" name="le_curTime">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>60</y>
+      <width>191</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="font">
+     <font>
+      <family>Yu Gothic UI</family>
+      <pointsize>24</pointsize>
+      <weight>75</weight>
+      <bold>true</bold>
+     </font>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">color: rgb(255, 255, 255);
+background-color: rgba(255, 255, 255, 0);
+border: none;</string>
+    </property>
+    <property name="text">
+     <string>Check In</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
     </property>
    </widget>
   </widget>
@@ -680,33 +706,85 @@ border-radius: 5px;
     <enum>Qt::Vertical</enum>
    </property>
   </widget>
-  <widget class="QLabel" name="le_curTime">
+  <widget class="QLabel" name="le_curTime_Collapse">
    <property name="geometry">
     <rect>
-     <x>110</x>
-     <y>60</y>
-     <width>191</width>
-     <height>41</height>
+     <x>80</x>
+     <y>0</y>
+     <width>260</width>
+     <height>60</height>
     </rect>
    </property>
    <property name="font">
     <font>
      <family>Yu Gothic UI</family>
-     <pointsize>24</pointsize>
+     <pointsize>28</pointsize>
      <weight>75</weight>
      <bold>true</bold>
     </font>
    </property>
    <property name="styleSheet">
     <string notr="true">color: rgb(255, 255, 255);
-background-color: rgba(255, 255, 255, 0);
-border: none;</string>
+background-color: rgba(64,64,64, 255);
+border: none;
+padding-left: 10px;
+border-radius: 0px;</string>
    </property>
    <property name="text">
     <string>Check In</string>
    </property>
    <property name="alignment">
-    <set>Qt::AlignCenter</set>
+    <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_collapse_a">
+   <property name="geometry">
+    <rect>
+     <x>339</x>
+     <y>0</y>
+     <width>60</width>
+     <height>60</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-color: rgb(245, 246, 249);
+border-radius: 0px;
+border-top-right-radius: 7px;
+border-bottom-right-radius: 7px;
+	background-image: url(:/img/expand_arrow.png);
+background-repeat:none;
+background-position: center;
+}
+
+QPushButton:hover{
+background-color: rgb(230, 240, 250);
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_stop_play_collapse">
+   <property name="geometry">
+    <rect>
+     <x>280</x>
+     <y>6</y>
+     <width>48</width>
+     <height>48</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton {
+	background-image: url(:/img/play_64px.png);
+	background-color: rgb(21, 95, 190);
+background-position: center;
+border-radius: 24px;
+border: 0px solid;
+}</string>
+   </property>
+   <property name="text">
+    <string/>
    </property>
   </widget>
  </widget>

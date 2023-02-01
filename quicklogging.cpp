@@ -213,9 +213,11 @@ void QuickLogging::buttonPress(int index){
         if(items[index]->isRecord){
             items[index]->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/pause_small.png);");
             btn_tps->setStyleSheet("QPushButton {\n	background-image: url(:/img/stop_64px.png);\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
+            btn_tps_collapse->setStyleSheet("QPushButton {\n	background-image: url(:/img/stop_64px.png);background-position:center;\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 24px;\nborder: 0px solid;\n}");
         } else {
             items[index]->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/play_small.png);");
             btn_tps->setStyleSheet("QPushButton {\n	background-image: url(:/img/play_64x.png);\n	background-color: rgb(29, 95, 190);\nbackground-image: url(:/img/play_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
+            btn_tps_collapse->setStyleSheet("QPushButton {\n	background-image: url(:/img/play_64x.png);\nbackground-position:center;\n	background-color: rgb(29, 95, 190);\nbackground-image: url(:/img/play_64px.png);\nborder-radius: 24px;\nborder: 0px solid;\n}");
         }
 
         //items[index]->box1->setStyleSheet(" QComboBox {\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
@@ -233,6 +235,7 @@ void QuickLogging::buttonPress(int index){
         items[index]->isSlected = 1;
         items[index]->isRecord = true;
         btn_tps->setStyleSheet("QPushButton {\n	background-image: url(:/img/stop_64px.png);\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 32px;\nborder: 0px solid;\n}");
+        btn_tps_collapse->setStyleSheet("QPushButton {\n	background-position:center;\nbackground-image: url(:/img/stop_64px.png);\n	background-color: rgb(190, 95, 29);\nbackground-image: url(:/img/stop_64px.png);\nborder-radius: 24px;\nborder: 0px solid;\n}");
         items[index]->btn_play_stop->setStyleSheet("border-radius:12px;\nbackground-color: rgb(244, 165, 48);\nbackground-image: url(:/img/pause_small.png);");
         items[index]->box1->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
         items[index]->box2->setStyleSheet(" QComboBox {\n	border: 1px solid rgb(60,173,33);\nbackground-color: rgb(255,255,255);\nfont: 12px;\n     border-radius: 3px;\n     padding: 1px 10px 1px 3px;\n     min-width: 6em;\n }\n\n QComboBox:editable {\n     background: white;\n }\n\n QComboBox:!editable, QComboBox::drop-down:editable {\n }\n\n QComboBox:!editable:on, QComboBox::drop-down:editable:on {\n }\n\n QComboBox:on {\n     padding-top: 3px;\n     padding-left: 4px;\n }\n\n QComboBox::drop-down {\n     subcontrol-origin: padding;\n     subcontrol-position: top right;\n     width: 15px;\n     border-left-color: darkgray;\n     border-left-style: solid;\n     border-top-right-radius: 3px;\n     border-bottom-right-radius: 3px;\n }\n\n QComboBox::down-arrow {\n	image: url(:/img/combo_arrow.png);\n }\n\n QComboBox::down-arrow:on {\n     image: url(:/img/combo_up_arrow.png);\n }");
@@ -251,7 +254,9 @@ void QuickLogging::showTime(){
     if(index!=-1){
         int curTime = items[index]->time;
         le_time->setText(QString("%1%2: %3%4: %5%6").arg(curTime/36000).arg(curTime%36000/3600).arg(curTime%3600/600).arg(curTime%600/60).arg(curTime%60/10).arg(curTime%10));
+        le_time_collapse->setText(le_time->text());
     } else {
         le_time->setText("Check In");
+        le_time_collapse->setText(le_time->text());
     }
 }
