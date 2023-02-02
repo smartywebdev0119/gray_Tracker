@@ -140,6 +140,7 @@ bool QuickLogging::eventFilter(QObject *o, QEvent *e){
 
 void QuickLogging::on_btn_addTask_clicked()
 {
+    if(items.size() >= 20) return;
     addProject();
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");

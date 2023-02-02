@@ -59,7 +59,7 @@ public:
 public slots:
     void startopRecord();
     void buttonPress(int index);
-private slots:
+public slots:
     void on_btn_addTask_clicked();
 
 private:

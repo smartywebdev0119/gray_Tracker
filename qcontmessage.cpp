@@ -11,6 +11,7 @@ QContMessage::QContMessage(QWidget *parent) :
     ui(new Ui::QContMessage)
 {
     ui->setupUi(this);
+    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
 }
 
 QContMessage::~QContMessage()
@@ -28,10 +29,14 @@ void QContMessage::setRoundWid(){
     this->setMask(rgn1+rgn2+rgn3+rgn4+rgn5+rgn6);
 }
 
+int m=0;
+
 void QContMessage::showEvent(QShowEvent *){
+    m = 0;
     setRoundWid();
     timerEvent(NULL);
     this->startTimer(60000);
+    isworking = 0;
 }
 
 void QContMessage::mousePressEvent(QMouseEvent *e){
@@ -60,16 +65,15 @@ void QContMessage::keyPressEvent(QKeyEvent *event){
 
 void QContMessage::on_btn_notWorking_clicked()
 {
-    exit(0);
+    close();
 }
 
 
 void QContMessage::on_btn_working_clicked()
 {
+    isworking = 1;
     close();
 }
-
-int m = 0;
 
 void QContMessage::timerEvent(QTimerEvent *){
     m ++;

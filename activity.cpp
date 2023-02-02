@@ -109,25 +109,28 @@ void Activity::mouseMoveEvent(QMouseEvent *e){
 
 void Activity::timerEvent(QTimerEvent *){
     QPoint mousePos = this->mapFromGlobal(QCursor::pos());
+    int index = -1;
     for(int i=0; i<items.size(); i++){
         if(items[i]->isMouseOver(mousePos, delta)){
             items[i]->alpha = items[i]->alpha+60<=60?items[i]->alpha+60:60;
-            //items[i]->view->show();
-            //items[i]->trash->show();
-            //items[i]->stime->show();
+            index = i;
+
+            ui->btn_trash->setGeometry(items[i]->x+items[i]->w-20, items[i]->y+4-(items[i]->h+30)*delta, 16, 16);
+            ui->le_time->setGeometry(items[i]->x+items[i]->w*50/425, items[i]->y+3*items[i]->h/4-(items[i]->h+30)*delta, items[i]->w*325/425, items[i]->h*2/9);
+            ui->btn_viewfile->setGeometry(items[i]->x+items[i]->w*100/425, items[i]->y+items[i]->h/2-(items[i]->h+30)*delta, items[i]->w*225/425, items[i]->h*2/9);
+
+            ui->btn_trash->show();
+            ui->btn_viewfile->show();
+            ui->le_time->show();
+            ui->le_time->setText(items[i]->timeTxt);
         } else {
             items[i]->alpha = items[i]->alpha-60>=0?items[i]->alpha-60:0;
-            if(items[i]->alpha == 0){
-                //items[i]->view->hide();
-                //items[i]->trash->hide();
-                //items[i]->stime->hide();
-            }
         }
-/*        QGraphicsOpacityEffect *effect = new QGraphicsOpacityEffect(this);
-        effect->setOpacity(((double)items[i]->alpha/60)); // Set opacity to 50%
-        items[i]->view->setGraphicsEffect(effect);
-        items[i]->trash->setGraphicsEffect(effect);
-        items[i]->stime->setGraphicsEffect(effect);*/
+    }
+    if(index == -1){
+        ui->btn_trash->hide();
+        ui->btn_viewfile->hide();
+        ui->le_time->hide();
     }
     update();
 }
@@ -150,6 +153,8 @@ void Activity::addItem(QString path, QString time, Activity *parent){
 
     item->pix = smoothResize(pix, w, h);
 
+    item->timeTxt = time;
+
     /*if(parent == NULL){
         parent = this;
     }
@@ -162,12 +167,9 @@ void Activity::addItem(QString path, QString time, Activity *parent){
 
     item->trash = new QPushButton(parent);*/
 
-    item->x = 0;
-    item->y = 20;
     item->w = w;
     item->h = h;
 
-    item->refresh(delta);
     items.push_back(item);
 
     refreshItems();
@@ -199,7 +201,6 @@ void Activity::refreshItems(){
     for(int i=items.size()-1; i>=0; i--){
         items[i]->x=((items.size()-1-i))%2==0?0:370/2+15;
         items[i]->y=((items.size()-1-i))/2*(normalHeight+30)+20;
-        items[i]->refresh(delta);
     }
 }
 
@@ -239,3 +240,15 @@ void Activity::viewAllActivity(){
     }
     refreshItems();
 }
+
+void Activity::on_btn_viewfile_clicked()
+{
+    btnClick();
+}
+
+
+void Activity::on_btn_trash_clicked()
+{
+    trashClick();
+}
+

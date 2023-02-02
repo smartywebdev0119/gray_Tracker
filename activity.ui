@@ -13,6 +13,84 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
+  <widget class="QPushButton" name="btn_viewfile">
+   <property name="geometry">
+    <rect>
+     <x>190</x>
+     <y>210</y>
+     <width>75</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+     <pointsize>10</pointsize>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+background-color:rgb(255, 255, 255);
+color:rgb(29,29,29);border-radius:3px;
+}
+QPushButton:hover{
+background-color:rgba(255, 255, 255, 200);
+color:rgb(29,29,29);border-radius:3px;
+}
+</string>
+   </property>
+   <property name="text">
+    <string>View File</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="btn_trash">
+   <property name="geometry">
+    <rect>
+     <x>230</x>
+     <y>190</y>
+     <width>16</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QPushButton{
+	background-color:rgba(0, 0, 0, 0);
+border: none;
+background-image: url(:/img/waste_hover.png);
+}
+QPushButton:hover{
+	background-color:rgba(255, 255, 255, 200);
+border: none;
+	background-image: url(:/img/waste_normal.png);
+}</string>
+   </property>
+   <property name="text">
+    <string/>
+   </property>
+  </widget>
+  <widget class="QLabel" name="le_time">
+   <property name="geometry">
+    <rect>
+     <x>180</x>
+     <y>260</y>
+     <width>131</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="font">
+    <font>
+     <family>Yu Gothic UI</family>
+    </font>
+   </property>
+   <property name="styleSheet">
+    <string notr="true">QLabel{
+color: rgb(250, 250, 250);background-color: rgba(0, 0, 0, 0);
+}</string>
+   </property>
+   <property name="text">
+    <string>Hello Every one</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>

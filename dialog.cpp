@@ -44,11 +44,6 @@ Dialog::Dialog(QWidget *parent)
     ui->setupUi(this);
     this->setWindowFlags(Qt::FramelessWindowHint);
 
-    dlg = new MyLoginDlg();
-    dlg->exec();
-
-    if(dlg->isLogin == 0) exit(0);
-
     actWid = new Activity;
     ui->tab_logging->addTab(actWid, "Activity");
 
@@ -56,6 +51,11 @@ Dialog::Dialog(QWidget *parent)
 
     quickLog = new QuickLogging;
     ui->tab_logging->addTab(quickLog, "Quick Logging");
+
+    dlg = new MyLoginDlg();
+    dlg->exec();
+
+    if(dlg->isLogin == 0) exit(0);
 
     quickLog->sll = ui->scroll_log;
     quickLog->btn_tps = ui->btn_stop_play;
@@ -72,7 +72,7 @@ Dialog::Dialog(QWidget *parent)
     isRecord = 0, iscollapse = 0;
     isDrag = false;    
 
-    recordTime = 1;
+    recordTime = 10;
 
     ui->tab_logging->hide();
     ui->scroll_log->hide();
@@ -205,6 +205,11 @@ void Dialog::showEvent(QShowEvent *){
 
         }
         db.close();
+
+        if(quickLog->items.size() == 0){
+            quickLog->on_btn_addTask_clicked();
+        }
+
         quickLog->showTime();
         ui->le_tTime->setText(QString("%1%2:%3%4 Hrs").arg(totalTime/36000).arg(totalTime%36000/3600).arg(totalTime%3600/600).arg(totalTime%600/60));
 
@@ -350,7 +355,7 @@ void Dialog::timerEvent(QTimerEvent *){
                     on_btn_stop_play_clicked();
                     QContMessage msg;
                     msg.exec();
-                    on_btn_stop_play_clicked();
+                    if(msg.isworking) on_btn_stop_play_clicked();
                 }
             } else {
                 cNo = 0;

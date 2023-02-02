@@ -16,11 +16,11 @@ public:
     explicit QContMessage(QWidget *parent = nullptr);
     ~QContMessage();
 public:
+    int isworking;
     void showEvent(QShowEvent*);
     void timerEvent(QTimerEvent*);
 private slots:
     void on_btn_notWorking_clicked();
-
     void on_btn_working_clicked();
 private:
     int isDrag;
