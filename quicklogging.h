@@ -21,6 +21,7 @@ public:
     QComboBox *box1, *box2;
     QLabel *aTime;
     QPushButton *btn_play_stop;
+    QPushButton *btn_edit, *btn_delete;
     int isSlected, isRecord;
 
     int time;
@@ -35,6 +36,8 @@ public:
         delete box2;
         delete aTime;
         delete btn_play_stop;
+        delete btn_edit;
+        delete btn_delete;
     }
 };
 

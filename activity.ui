@@ -80,6 +80,7 @@ border: none;
    <property name="font">
     <font>
      <family>Yu Gothic UI</family>
+     <pointsize>9</pointsize>
     </font>
    </property>
    <property name="styleSheet">
@@ -89,6 +90,9 @@ color: rgb(250, 250, 250);background-color: rgba(0, 0, 0, 0);
    </property>
    <property name="text">
     <string>Hello Every one</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
    </property>
   </widget>
  </widget>

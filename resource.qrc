@@ -23,5 +23,8 @@
         <file>img/play_small.png</file>
         <file>img/gray_matrix.png</file>
         <file>img/expand_arrow.png</file>
+        <file alias="/trash">img/icons8_trash.ico</file>
+        <file alias="/edit">img/icons8_edit_16.png</file>
+        <file>img/icons8_edit.ico</file>
     </qresource>
 </RCC>

@@ -70,6 +70,7 @@ private: //
     void showEvent(QShowEvent*);
     void keyPressEvent(QKeyEvent*);
     void timerEvent(QTimerEvent*);
+    void closeEvent(QCloseEvent*);
 private:
     void paintEvent(QPaintEvent*);
 private:

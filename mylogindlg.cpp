@@ -8,7 +8,7 @@
 #include <QGraphicsDropShadowEffect>
 #include <QMouseEvent>
 
-#define BR 6
+#define BR 7
 
 MyLoginDlg::MyLoginDlg(QWidget *parent) :
     QDialog(parent),

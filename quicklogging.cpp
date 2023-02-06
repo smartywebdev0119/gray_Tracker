@@ -54,6 +54,16 @@ void QuickLogging::addProject(int box1=-1, int box2=-1, int isSelected=-1, int t
     item->box2->addItem("GM Insights App");
     item->box2->setEditText("");
 
+    item->btn_edit = new QPushButton(this);
+    item->btn_edit->setText("Edit");
+    item->btn_edit->setIcon(QIcon(":/edit"));
+    item->btn_edit->setStyleSheet("QPushButton{\nborder: none;\nbackground-color: rgba(0, 0, 0, 0);\ncolor: rgb(200, 56, 56);\npadding: 2px;\n}\n\nQPushButton:hover{\nbackground-color: rgba(0, 0, 0, 10);\nborder-radius: 5px;\n}");
+
+    item->btn_delete = new QPushButton(this);
+    item->btn_delete->setText("Delete");
+    item->btn_delete->setStyleSheet("QPushButton{\nborder: none;\nbackground-color: rgba(0, 0, 0, 0);\npadding: 2px;\n}\n\nQPushButton:hover{\nbackground-color: rgba(0, 0, 0, 10);\nborder-radius: 5px;\n}");
+    item->btn_delete->setIcon(QIcon(":/trash"));
+
     if(box2!=-1){
         item->box2->setCurrentIndex(box2);
     }
@@ -105,6 +115,9 @@ void QuickLogging::refreshItems(){
         items[i]->aTime->setGeometry(270, 65+(i)*65-delta*13, 67, 30);
         items[i]->btn_play_stop->setGeometry(345, 69+(i)*65-delta*13, 24, 24);
 
+        items[i]->btn_edit->setGeometry(210, 65+(i)*65-delta*13+35, 57, 20);
+        items[i]->btn_delete->setGeometry(270, 65+(i)*65-delta*13+35, 57, 20);
+
         items[i]->box1->show();
         items[i]->box2->show();
         items[i]->aTime->show();
@@ -144,7 +157,7 @@ void QuickLogging::on_btn_addTask_clicked()
     addProject();
 
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("gray.db");
+    db.setDatabaseName("logs\\gray.db");
 
     if (!db.open()) {
         qDebug() << "Error: connection with database fail";
@@ -167,7 +180,7 @@ void QuickLogging::on_btn_addTask_clicked()
 
 void QuickLogging::saveTasks(){
     QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-    db.setDatabaseName("gray.db");
+    db.setDatabaseName("logs\\gray.db");
 
     if (!db.open()) {
         qDebug() << "Error: connection with database fail";

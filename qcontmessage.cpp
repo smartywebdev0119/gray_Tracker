@@ -79,3 +79,15 @@ void QContMessage::timerEvent(QTimerEvent *){
     m ++;
     ui->le_hTime->setText(QString("%1 mins of Idle Time").arg(m));
 }
+
+void QContMessage::on_btn_minimize_clicked()
+{
+    this->showMinimized();
+}
+
+
+void QContMessage::on_btn_close_clicked()
+{
+    this->close();
+}
+

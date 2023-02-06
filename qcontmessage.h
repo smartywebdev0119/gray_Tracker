@@ -22,6 +22,10 @@ public:
 private slots:
     void on_btn_notWorking_clicked();
     void on_btn_working_clicked();
+    void on_btn_minimize_clicked();
+
+    void on_btn_close_clicked();
+
 private:
     int isDrag;
     QPoint tst, bPos;

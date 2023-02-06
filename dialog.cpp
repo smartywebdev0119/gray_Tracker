@@ -114,7 +114,7 @@ void Dialog::showMode(){
 
 void Dialog::collapseMode(){
 
-    this->setWindowFlags(Qt::FramelessWindowHint | Qt::WindowStaysOnTopHint);
+    this->setWindowFlags(Qt::WindowStaysOnTopHint);
     this->show();
 
     prevHeight = this->geometry().height();
@@ -175,8 +175,14 @@ void Dialog::showEvent(QShowEvent *){
         isBegin = 1;
         setRoundWid();
 
+        QString dirPath = "logs\\screenshots\\";
+        QDir dir;
+        if(!dir.exists(dirPath)){
+            dir.mkpath(dirPath);
+        }
+
         QSqlDatabase db = QSqlDatabase::addDatabase("QSQLITE");
-        db.setDatabaseName("gray.db");
+        db.setDatabaseName("logs\\gray.db");
 
         if (!db.open()) {
             qDebug() << "Error: connection with database fail";
@@ -201,14 +207,16 @@ void Dialog::showEvent(QShowEvent *){
 
             quickLog->addProject(box1, box2, isSelected, time);
             totalTime += time;
-            quickLog->sll->hide();
 
         }
         db.close();
 
         if(quickLog->items.size() == 0){
             quickLog->on_btn_addTask_clicked();
+//            quickLog->addProject(0, 0, 1, 0);
         }
+
+        quickLog->sll->hide();
 
         quickLog->showTime();
         ui->le_tTime->setText(QString("%1%2:%3%4 Hrs").arg(totalTime/36000).arg(totalTime%36000/3600).arg(totalTime%3600/600).arg(totalTime%600/60));
@@ -376,6 +384,10 @@ void Dialog::keyPressEvent(QKeyEvent *event){
     if(event->key() == Qt::Key_Enter || event->key() == Qt::Key_Escape){
         return;
     }
+}
+
+void Dialog::closeEvent(QCloseEvent *){
+    quickLog->saveTasks();
 }
 
 

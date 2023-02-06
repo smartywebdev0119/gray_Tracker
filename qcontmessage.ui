@@ -71,7 +71,7 @@ border-top:0px;</string>
    <widget class="QPushButton" name="btn_minimize">
     <property name="geometry">
      <rect>
-      <x>300</x>
+      <x>330</x>
       <y>10</y>
       <width>24</width>
       <height>24</height>
@@ -97,41 +97,6 @@ QPushButton:pressed{
 	background-color: rgb(150, 150, 150, 50);
 border: 0px solid;
 	background-image: url(:/img/minimize_hover.png);
-}</string>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="btn_minimize_2">
-    <property name="geometry">
-     <rect>
-      <x>330</x>
-      <y>10</y>
-      <width>24</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Yu Gothic UI</family>
-      <pointsize>12</pointsize>
-     </font>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">QPushButton {
-	background-image: url(:/img/collapse_normal.png);
-border: 0px solid;
-}
-QPushButton:hover{
-	background-color: rgb(255, 255, 255, 100);
-	background-image: url(:/img/collapse_hover.png);
-border: 0px solid;
-}
-QPushButton:pressed{
-	background-color: rgb(150, 150, 150, 50);
-	background-image: url(:/img/collapse_hover.png);
-border: 0px solid;
 }</string>
     </property>
     <property name="text">
